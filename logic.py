@@ -60,34 +60,40 @@ def move_left(matrix):
     return merge_matrix
 
 def move_right(matrix):
-    matrix_reverse = [row[::-1] for row in matrix]
+    matrix_reverse = reverse(matrix)
     compress_matrix = compress(matrix_reverse)
     merge_matrix, changed = merge(compress_matrix)
     if changed:
         compress(merge_matrix)
-    return [row[::-1] for row in merge_matrix]
+    return reverse(merge_matrix)
 
 def move_up(matrix):
-    matrix_transpose = [[matrix[j][i] for j in range(4)] for i in range(4)]
+    matrix_transpose = transpose(matrix)
     compress_matrix = compress(matrix_transpose)
     merge_matrix, changed = merge(compress_matrix)
     if changed:
         compress(merge_matrix)
-    return [[merge_matrix[j][i] for j in range(4)] for i in range(4)]
+    return transpose(merge_matrix)
 
 def move_down(matrix):
-    matrix_transpose = [[matrix[j][i] for j in range(4)] for i in range(4)]
-    matrix_reverse = [row[::-1] for row in matrix_transpose]
+    matrix_transpose = transpose(matrix)
+    matrix_reverse = reverse(matrix_transpose)
     compress_matrix = compress(matrix_reverse)
     merge_matrix, changed = merge(compress_matrix)
     if changed:
         compress(merge_matrix)
-    merge_matrix_reverse = [row[::-1] for row in merge_matrix]
-    return [[merge_matrix_reverse[j][i] for j in range(4)] for i in range(4)]
+    merge_matrix_reverse = reverse(merge_matrix)
+    return transpose(merge_matrix_reverse)
+
+def transpose(matrix):
+    return [[matrix[j][i] for j in range(4)] for i in range(4)]
+
+def reverse(matrix):
+    return [row[::-1] for row in matrix]
 
 if __name__ == '__main__':
     matrix=[[2,2,0,8], 
             [2,2,2,2], 
             [2,2,4,0], 
             [2,0,8,0]]
-    print(move_down(matrix))
+    print(move_left(matrix))
