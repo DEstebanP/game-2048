@@ -40,7 +40,6 @@ def compress(matrix):
         for index in range(number_row_zero):
             row.remove(0)
         row += [0] * number_row_zero
-    print(matrix)
     return matrix
 
 def merge(matrix):
@@ -53,7 +52,42 @@ def merge(matrix):
                 changed = True  
     return matrix, changed
 
+def move_left(matrix):
+    compress_matrix = compress(matrix)
+    merge_matrix, changed = merge(compress_matrix)
+    if changed:
+        compress(merge_matrix)
+    return merge_matrix
+
+def move_right(matrix):
+    matrix_reverse = [row[::-1] for row in matrix]
+    compress_matrix = compress(matrix_reverse)
+    merge_matrix, changed = merge(compress_matrix)
+    if changed:
+        compress(merge_matrix)
+    return [row[::-1] for row in merge_matrix]
+
+def move_up(matrix):
+    matrix_transpose = [[matrix[j][i] for j in range(4)] for i in range(4)]
+    compress_matrix = compress(matrix_transpose)
+    merge_matrix, changed = merge(compress_matrix)
+    if changed:
+        compress(merge_matrix)
+    return [[merge_matrix[j][i] for j in range(4)] for i in range(4)]
+
+def move_down(matrix):
+    matrix_transpose = [[matrix[j][i] for j in range(4)] for i in range(4)]
+    matrix_reverse = [row[::-1] for row in matrix_transpose]
+    compress_matrix = compress(matrix_reverse)
+    merge_matrix, changed = merge(compress_matrix)
+    if changed:
+        compress(merge_matrix)
+    merge_matrix_reverse = [row[::-1] for row in merge_matrix]
+    return [[merge_matrix_reverse[j][i] for j in range(4)] for i in range(4)]
+
 if __name__ == '__main__':
-    matrix=start_game()
-    merge_matrix=compress(matrix)
-    merge(merge_matrix)
+    matrix=[[2,2,0,8], 
+            [2,2,2,2], 
+            [2,2,4,0], 
+            [2,0,8,0]]
+    print(move_down(matrix))
