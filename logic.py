@@ -57,7 +57,7 @@ def move_left(matrix):
     merge_matrix, changed = merge(compress_matrix)
     if changed:
         compress(merge_matrix)
-    return merge_matrix
+    return merge_matrix, changed
 
 def move_right(matrix):
     matrix_reverse = reverse(matrix)
@@ -65,7 +65,7 @@ def move_right(matrix):
     merge_matrix, changed = merge(compress_matrix)
     if changed:
         compress(merge_matrix)
-    return reverse(merge_matrix)
+    return reverse(merge_matrix), changed
 
 def move_up(matrix):
     matrix_transpose = transpose(matrix)
@@ -73,7 +73,7 @@ def move_up(matrix):
     merge_matrix, changed = merge(compress_matrix)
     if changed:
         compress(merge_matrix)
-    return transpose(merge_matrix)
+    return transpose(merge_matrix), changed
 
 def move_down(matrix):
     matrix_transpose = transpose(matrix)
@@ -83,7 +83,7 @@ def move_down(matrix):
     if changed:
         compress(merge_matrix)
     merge_matrix_reverse = reverse(merge_matrix)
-    return transpose(merge_matrix_reverse)
+    return transpose(merge_matrix_reverse), changed
 
 def transpose(matrix):
     return [[matrix[j][i] for j in range(4)] for i in range(4)]
@@ -91,9 +91,20 @@ def transpose(matrix):
 def reverse(matrix):
     return [row[::-1] for row in matrix]
 
+def game_status(matrix):
+    changed = []
+    func_list = (move_left,move_right, move_up, move_down)
+    for i in range(4):
+        mat_copy = [row.copy() for row in matrix]
+        merge_matrix, is_matrix_changed = func_list[i](mat_copy)
+        changed.append(is_matrix_changed)
+    if True not in changed:
+        return "GAME OVER"
+
 if __name__ == '__main__':
     matrix=[[2,2,0,8], 
             [2,2,2,2], 
             [2,2,4,0], 
             [2,0,8,0]]
-    print(move_left(matrix))
+    print(transpose(matrix))
+    print(matrix)
