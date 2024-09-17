@@ -1,10 +1,3 @@
-'''
-- messages
-- array con 4 filas
-- agregar un 2 de forma aleatoria
-- movimientos
-- condicional si se acaba el juego o no
-'''
 import random
 def start_game():
     mat = []
