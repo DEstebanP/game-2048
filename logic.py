@@ -117,12 +117,4 @@ def game_status(matrix):
             return "GAME NOT OVER"
 
 if __name__ == '__main__':
-    matrix=[[2,2,0,8], 
-            [2,2,2,2], 
-            [2,2,4,0], 
-            [2,0,8,0]]
-    matrix_2= [[2,2,0,8], 
-            [2,2,2,2], 
-            [2,2,4,0], 
-            [2,0,8,0]]
-    print(matrix==matrix_2)
+    start_game()
