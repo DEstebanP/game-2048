@@ -21,10 +21,13 @@ def start_game():
     add_new_2(mat)
     add_new_2(mat)
 
-    for i in mat:
-        print(i)
+    print_matrix(mat)
 
     return mat
+
+def print_matrix(matrix):
+    for i in matrix:
+        print(i)
 
 def add_new_2(game_matrix):
     while True:
@@ -53,7 +56,8 @@ def merge(matrix):
     return matrix, changed
 
 def move_left(matrix):
-    compress_matrix = compress(matrix)
+    mat_copy = [row.copy() for row in matrix]
+    compress_matrix = compress(mat_copy)
     merge_matrix, changed = merge(compress_matrix)
     if changed:
         compress(merge_matrix)
@@ -93,18 +97,32 @@ def reverse(matrix):
 
 def game_status(matrix):
     changed = []
+    is_zero_in_row = []
     func_list = (move_left,move_right, move_up, move_down)
-    for i in range(4):
-        mat_copy = [row.copy() for row in matrix]
-        merge_matrix, is_matrix_changed = func_list[i](mat_copy)
-        changed.append(is_matrix_changed)
-    if True not in changed:
-        return "GAME OVER"
+    
+    for row in matrix:
+        if 0 not in row:
+            is_zero_in_row.append(False)
+        else: 
+            is_zero_in_row.append(True)
+
+    if True not in is_zero_in_row:
+        for i in range(4):
+            mat_copy = [row.copy() for row in matrix]
+            merge_matrix, is_matrix_changed = func_list[i](mat_copy)
+            changed.append(is_matrix_changed)
+        if True not in changed:
+            return "GAME OVER"
+        else: 
+            return "GAME NOT OVER"
 
 if __name__ == '__main__':
     matrix=[[2,2,0,8], 
             [2,2,2,2], 
             [2,2,4,0], 
             [2,0,8,0]]
-    print(transpose(matrix))
-    print(matrix)
+    matrix_2= [[2,2,0,8], 
+            [2,2,2,2], 
+            [2,2,4,0], 
+            [2,0,8,0]]
+    print(matrix==matrix_2)
